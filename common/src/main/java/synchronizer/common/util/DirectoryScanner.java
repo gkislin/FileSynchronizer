@@ -1,9 +1,11 @@
 package synchronizer.common.util;
 
+import com.google.common.collect.Lists;
 import synchronizer.common.LoggerWrapper;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -36,8 +38,8 @@ public class DirectoryScanner {
     }
 
     public void process(Consumer<Path> consumer) throws IOException, InterruptedException {
-        // Send first all files, remaining in dir
-        getDirectoryStream(scannedDir).forEach(consumer::accept);
+        List<Path> received = Lists.newArrayList(getDirectoryStream(scannedDir));
+        received.forEach(consumer::accept);
     }
 
     public void scanAndProcess(Consumer<Path> consumer) throws IOException, InterruptedException {
