@@ -10,14 +10,14 @@ import java.nio.file.Path;
  * GKislin
  * 05.03.2015.
  * <p/>
- * TODO implement
- * Send by network
+ * TODO implement network sending
  * Mock for test: just copy to other dir with overriding
  */
 public class FileSender {
 
-    public Writer getWriter(String path) throws IOException {
-        Path targetFile = ClientConfig.get().getTargetDirectory().resolve(path);
+    public Writer getWriter(final String path) throws IOException {
+        final Path targetFile = ClientConfig.get().getTargetDirectory().resolve(path);
+        //TODO check also chunkFile.done
         if (!Files.exists(targetFile)) {
             return Files.newBufferedWriter(targetFile, StandardCharsets.UTF_8);
         }

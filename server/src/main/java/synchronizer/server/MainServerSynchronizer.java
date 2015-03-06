@@ -15,14 +15,13 @@ public class MainServerSynchronizer {
     private static final LoggerWrapper LOG = LoggerWrapper.get(MainServerSynchronizer.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        ServerXmlHandler xmlHandler = new ServerXmlHandler();
+        final ServerXmlHandler xmlHandler = new ServerXmlHandler();
         final ScheduledExecutor executor = new ScheduledExecutor();
-        DirectoryScanner scanner = new DirectoryScanner(ServerConfig.get().getReceivingDirectory());
+        final DirectoryScanner scanner = new DirectoryScanner(ServerConfig.get().getReceivingDirectory());
 
-        // process remaining receiving files
-        scanner.process(xmlHandler::processChunkFile);
+        //TODO make scanning and deleting todo chunkFile.done flag files older that (now - <maximum outage period>)
 
-        // scan for new receiving files
+        // scan for receiving files
         executor.scheduleWithFixedDelay(() -> {
             try {
                 scanner.process(xmlHandler::processChunkFile);
