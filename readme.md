@@ -20,6 +20,6 @@ Network transfer was emulated by copy to other directory.
 > xml_storage: directory for synchronizing xml files
 
 TODO
-====
+----
 + Implement network
 + Refactoring, based on file flags (TODO in comments)
