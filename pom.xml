@@ -16,7 +16,7 @@
         <module>client</module>
         <module>server</module>
         <module>common</module>
-        <module>run-backgroung-plugin</module>
+        <module>run-background-plugin</module>
     </modules>
 
     <properties>

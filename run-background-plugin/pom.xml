@@ -10,9 +10,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>run-backgroung-plugin</artifactId>
+    <artifactId>run-background-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>Run backgroung java Main</name>
+    <name>Run background java Main</name>
 
     <build>
         <plugins>
@@ -45,12 +45,12 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-project</artifactId>
-            <version>2.2.1</version>
+            <version>3.0-alpha-2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-artifact</artifactId>
-            <version>2.2.1</version>
+            <version>3.2.5</version>
         </dependency>
     </dependencies>
 

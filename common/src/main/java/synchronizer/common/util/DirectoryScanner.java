@@ -18,8 +18,8 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 public class DirectoryScanner {
     private static final LoggerWrapper LOG = LoggerWrapper.get(DirectoryScanner.class);
 
-    private WatchService watcher;
-    private Path scannedDir;
+    private final WatchService watcher;
+    private final Path scannedDir;
 
     public DirectoryScanner(Path dir) {
         checkArgument(Files.isDirectory(dir));
