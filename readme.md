@@ -23,3 +23,12 @@ TODO
 ----
 + Implement network
 + Refactoring, based on file flags (TODO in comments)
+
+Integration  test
+-----------------
+From root dir:
+
+> mvn -P it verify
+
+Run in background client and server main and integration tests: MainServerSynchronizerIT- TODO
+Client and Server run via run-background-plugin (only Windows implementation, Unix- TODO)
