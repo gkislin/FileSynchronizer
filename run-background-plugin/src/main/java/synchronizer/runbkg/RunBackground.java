@@ -9,6 +9,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * GKislin
  * 13.03.2015.
@@ -29,8 +32,10 @@ public class RunBackground extends AbstractMojo {
         try {
             //TODO implement for unix
             System.out.println("Run " + mainClass + " in background");
+            Set<String> classpath = new HashSet<>(project.getCompileClasspathElements());
+            classpath.addAll(project.getRuntimeClasspathElements());
             Runtime.getRuntime().exec("cmd /c start java -cp " +
-                    String.join(System.getProperty("path.separator"), project.getCompileClasspathElements()) + ' ' + mainClass);
+                    String.join(System.getProperty("path.separator"), classpath) + ' ' + mainClass);
         } catch (Exception e) {
             throw new MojoExecutionException("Execution failed", e);
         }
