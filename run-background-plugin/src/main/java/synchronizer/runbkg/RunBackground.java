@@ -27,6 +27,7 @@ public class RunBackground extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         try {
+            //TODO implement for unix
             System.out.println("Run " + mainClass + " in background");
             Runtime.getRuntime().exec("cmd /c start java -cp " +
                     String.join(System.getProperty("path.separator"), project.getCompileClasspathElements()) + ' ' + mainClass);
