@@ -4,13 +4,13 @@ import com.google.common.collect.Iterators;
 import synchronizer.common.LoggerWrapper;
 import synchronizer.common.Statistic;
 import synchronizer.common.util.DirectoryScanner;
-import synchronizer.common.util.ScheduledExecutor;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,7 +23,7 @@ public class MainClientSynchronizer {
     public static void main(String[] args) throws IOException, InterruptedException {
         final ClientConfig config = ClientConfig.get();
         final ClientXmlHandler xmlHandler = new ClientXmlHandler();
-        final ScheduledExecutor executor = new ScheduledExecutor();
+        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
 
         // Scan xml files and process them
         executor.scheduleWithFixedDelay(() -> {

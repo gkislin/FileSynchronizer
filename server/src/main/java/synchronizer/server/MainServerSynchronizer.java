@@ -2,9 +2,9 @@ package synchronizer.server;
 
 import synchronizer.common.LoggerWrapper;
 import synchronizer.common.util.DirectoryScanner;
-import synchronizer.common.util.ScheduledExecutor;
 
 import java.io.IOException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,7 +16,8 @@ public class MainServerSynchronizer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         ServerXmlHandler xmlHandler = new ServerXmlHandler();
-        final ScheduledExecutor executor = new ScheduledExecutor();
+        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+
         DirectoryScanner scanner = new DirectoryScanner(ServerConfig.get().getReceivingDirectory());
 
         // process remaining receiving files
