@@ -41,44 +41,18 @@
                             </execution>
                         </executions>
                     </plugin>
-<!--
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <groupId>test.synchronyzer</groupId>
+                        <artifactId>run-backgroung-plugin</artifactId>
+                        <version>1.0-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <phase>pre-integration-test</phase>
                                 <goals>
-                                    <goal>java</goal>
+                                    <goal>run</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>synchronizer.common.util.RunBackground</mainClass>
-                                    <arguments>
-                                        <argument>synchronizer.client.MainServerSynchronizer</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
--->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.3.2</version>
-                        <executions>
-                            <execution>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>java_bgr.sh</executable>
-                                    <arguments>
-                                        <argument>-classpath</argument>
-                                        <classpath/>
-                                        <argument>synchronizer.client.MainServerSynchronizer</argument>
-                                    </arguments>
+                                    <mainClass>synchronizer.client.MainServerSynchronizer</mainClass>
                                 </configuration>
                             </execution>
                         </executions>
