@@ -25,18 +25,20 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class ClientXmlHandler {
     private static final LoggerWrapper LOG = LoggerWrapper.get(ClientXmlHandler.class);
 
-    private XmlParser parser = XmlParserFactory.getParser();
+    private final XmlParser parser = XmlParserFactory.getParser();
     final FileSender fileSender = new FileSender();
 
     public void processChunkFiles(final List<Path> paths) throws IOException, JAXBException {
         checkArgument(!paths.isEmpty());
 
-        XMLUsers users = createXMLUsers(paths);
-        List<XMLUser> xmlUser = users.getXMLUser();
-        String chunkFile = "chunk_" + xmlUser.get(0).getCode() + '-' + xmlUser.get(xmlUser.size() - 1).getCode() + ".xml";
+        final XMLUsers users = createXMLUsers(paths);
+        final List<XMLUser> xmlUser = users.getXMLUser();
+        final String chunkFile = "chunk_" + xmlUser.get(0).getCode() + '-' + xmlUser.get(xmlUser.size() - 1).getCode() + ".xml";
         LOG.info("Send chunk " + chunkFile);
 
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
+
+        // TODO set flag file: chunkFile.writing (server side when network transfer)
         try (Writer writer = fileSender.getWriter(chunkFile)) {
             if (writer != null) {
                 parser.marshall(users, writer);
@@ -44,12 +46,11 @@ public class ClientXmlHandler {
         }
         Statistic.get().addRecord(chunkFile, (int) (System.currentTimeMillis() - start));
 
-        // delete after sending
-        // forEach is not applicable cause of IOException
-        // TODO not atomic, possible problem with chunk if deleted only part
+        // TODO rename file flag to chunkFile.deleting
         for (Path p : paths) {
             Files.delete(p);
         }
+        // TODO remove chunkFile.deleting
     }
 
     public XMLUsers createXMLUsers(final List<Path> list) throws IOException, JAXBException {

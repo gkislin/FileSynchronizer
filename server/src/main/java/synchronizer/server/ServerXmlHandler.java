@@ -23,23 +23,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ServerXmlHandler {
     private static final LoggerWrapper LOG = LoggerWrapper.get(ServerXmlHandler.class);
 
-    private XmlParser parser = XmlParserFactory.getParser();
-    private UserDao userDao = new UserDao();
+    private final XmlParser parser = XmlParserFactory.getParser();
+    private final UserDao userDao = new UserDao();
 
     public void processChunkFile(final Path chunkFile) {
         LOG.info("Receive " + chunkFile);
         checkNotNull(chunkFile);
-        XMLUsers xmlUsers;
+        final XMLUsers xmlUsers;
         try {
             // Wait until file received
             // http://stackoverflow.com/questions/3369383/java-watching-a-directory-to-move-large-files/3369416#3369416
-            // TODO wait based on file flag ?
+            // TODO wait based on flag file chunkFile.writing
             Thread.sleep(500);
+
             try (Reader reader = Files.newBufferedReader(chunkFile, StandardCharsets.UTF_8)) {
                 xmlUsers = parser.unmarshall(reader);
             }
+            // TODO rename flag file chunkFile.db_saving
             userDao.save(xmlUsers.getXMLUser());
 
+            // TODO rename flag file to chunkFile.done
             // delete only after saving into DB.
             Files.delete(chunkFile);
 
