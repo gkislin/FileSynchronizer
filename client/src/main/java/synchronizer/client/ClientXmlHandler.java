@@ -2,6 +2,7 @@ package synchronizer.client;
 
 import synchronizer.common.LoggerWrapper;
 import synchronizer.common.Statistic;
+import synchronizer.common.util.FileUtil;
 import synchronizer.common.xml.XmlParser;
 import synchronizer.common.xml.XmlParserFactory;
 import synchronizer.common.xml.schema.XMLUser;
@@ -26,23 +27,24 @@ public class ClientXmlHandler {
     private static final LoggerWrapper LOG = LoggerWrapper.get(ClientXmlHandler.class);
 
     private final XmlParser parser = XmlParserFactory.getParser();
-    final FileSender fileSender = new FileSender();
 
     public void processChunkFiles(final List<Path> paths) throws IOException, JAXBException {
         checkArgument(!paths.isEmpty());
 
         final XMLUsers users = createXMLUsers(paths);
-        final List<XMLUser> xmlUser = users.getXMLUser();
-        final String chunkFile = "chunk_" + xmlUser.get(0).getCode() + '-' + xmlUser.get(xmlUser.size() - 1).getCode() + ".xml";
+        String startName = FileUtil.getNameWithoutExtension(paths.get(0));
+        String endName = FileUtil.getNameWithoutExtension(paths.get(paths.size() - 1));
+        final String chunkFile = "chunk_" + startName + '-' + endName;
         LOG.info("Send chunk " + chunkFile);
 
         final long start = System.currentTimeMillis();
 
-        // TODO set flag file: chunkFile.writing (server side when network transfer)
-        try (Writer writer = fileSender.getWriter(chunkFile)) {
-            if (writer != null) {
+        FileTransfer ft = new FileTransfer(chunkFile);
+        if (!ft.isTransfered()) {
+            try (Writer writer = ft.getWriter()) {
                 parser.marshall(users, writer);
             }
+            ft.finish();
         }
         Statistic.get().addRecord(chunkFile, (int) (System.currentTimeMillis() - start));
 
@@ -53,12 +55,16 @@ public class ClientXmlHandler {
         // TODO remove chunkFile.deleting
     }
 
-    public XMLUsers createXMLUsers(final List<Path> list) throws IOException, JAXBException {
+    public XMLUsers createXMLUsers(final List<Path> list) throws IOException {
         final XMLUsers xmlUsers = new XMLUsers();
         final List<XMLUser> userList = xmlUsers.getXMLUser();
         for (Path path : list) {
-            try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-                userList.add(parser.unmarshall(reader));
+            try {
+                try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+                    userList.add(parser.unmarshall(reader));
+                }
+            } catch (Exception e) {
+                FileUtil.replaceExtension(path, "bad");
             }
         }
         return xmlUsers;

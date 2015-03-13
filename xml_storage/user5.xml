@@ -1,0 +1,15 @@
+<XMLUser xmlns="https://cargoonline.ru"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://cargoonline.ru userSchema.xsd"
+         code="U5" age="55" flag="active">
+
+    <username>User5</username>
+    <firstname>FirstName5</firstname>
+    <lastname>LastName5</lastname>
+    <birth>2000-09-24</birth>
+    <address>
+        <country>Russia</country>
+        <city>St. Petersburg</city>
+        <street>Mira</street>
+    </address>
+</XMLUser>

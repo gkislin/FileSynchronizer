@@ -4,12 +4,12 @@ import com.google.common.collect.Lists;
 import synchronizer.common.LoggerWrapper;
 import synchronizer.common.Statistic;
 import synchronizer.common.util.DirectoryScanner;
+import synchronizer.common.util.ScheduledExecutor;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,7 +22,7 @@ public class MainClientSynchronizer {
     public static void main(String[] args) throws IOException, InterruptedException {
         final ClientConfig config = ClientConfig.get();
         final ClientXmlHandler xmlHandler = new ClientXmlHandler();
-        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+        final ScheduledExecutor executor = new ScheduledExecutor();
 
         // TODO scan chunkFile.deleting for recover deleting if failed
 

@@ -2,9 +2,9 @@ package synchronizer.server;
 
 import synchronizer.common.LoggerWrapper;
 import synchronizer.common.util.DirectoryScanner;
+import synchronizer.common.util.ScheduledExecutor;
 
 import java.io.IOException;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,7 +16,7 @@ public class MainServerSynchronizer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         ServerXmlHandler xmlHandler = new ServerXmlHandler();
-        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+        final ScheduledExecutor executor = new ScheduledExecutor();
 
         DirectoryScanner scanner = new DirectoryScanner(ServerConfig.get().getReceivingDirectory());
 
@@ -25,6 +25,7 @@ public class MainServerSynchronizer {
 
         // scan for new receiving files
         executor.scheduleWithFixedDelay(() -> {
+            System.out.println("Server scan");
             try {
                 scanner.process(xmlHandler::processChunkFile);
             } catch (IOException | InterruptedException e) {

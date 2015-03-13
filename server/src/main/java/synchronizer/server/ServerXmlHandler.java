@@ -31,22 +31,17 @@ public class ServerXmlHandler {
         checkNotNull(chunkFile);
         final XMLUsers xmlUsers;
         try {
-            // Wait until file received
-            // http://stackoverflow.com/questions/3369383/java-watching-a-directory-to-move-large-files/3369416#3369416
-            // TODO wait based on flag file chunkFile.writing
-            Thread.sleep(500);
-
             try (Reader reader = Files.newBufferedReader(chunkFile, StandardCharsets.UTF_8)) {
                 xmlUsers = parser.unmarshall(reader);
             }
             // TODO rename flag file chunkFile.db_saving
             userDao.save(xmlUsers.getXMLUser());
-
             // TODO rename flag file to chunkFile.done
             // delete only after saving into DB.
             Files.delete(chunkFile);
+            LOG.info(chunkFile + " have been processed");
 
-        } catch (IOException | JAXBException | SQLException | InterruptedException e) {
+        } catch (IOException | JAXBException | SQLException e) {
             throw LOG.getIllegalStateException("Exception during processing received file " + chunkFile, e);
         }
     }
