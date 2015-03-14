@@ -34,7 +34,7 @@ public class ClientXmlHandler {
         final XMLUsers users = createXMLUsers(paths);
         String startName = FileUtil.getNameWithoutExtension(paths.get(0));
         String endName = FileUtil.getNameWithoutExtension(paths.get(paths.size() - 1));
-        final String chunkFile = "chunk_" + startName + '-' + endName;
+        final String chunkFile = "chunk_" + startName + '_' + endName;
         LOG.info("Send chunk " + chunkFile);
 
         final long start = System.currentTimeMillis();

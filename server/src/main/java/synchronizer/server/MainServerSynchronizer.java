@@ -25,7 +25,6 @@ public class MainServerSynchronizer {
 
         // scan for new receiving files
         executor.scheduleWithFixedDelay(() -> {
-            System.out.println("Server scan");
             try {
                 scanner.process(xmlHandler::processChunkFile);
             } catch (IOException | InterruptedException e) {

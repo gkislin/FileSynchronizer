@@ -4,14 +4,16 @@ File synchronizer
 Build:      mvn install
 
 Run client:
-> cd client
+----------
+From root dir:
 
-> mvn exec:java -Dexec.mainClass=synchronizer.client.MainClientSynchronizer
+> mvn -P client verify
 
 Run server:
-> cd server
+----------
+From root dir:
 
-> mvn exec:java -Dexec.mainClass=synchronizer.server.MainServerSynchronizer
+> mvn -P server verify
 
 Network transfer was emulated by copy to other directory.
 
