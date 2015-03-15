@@ -8,5 +8,5 @@ CREATE TABLE users (
   country   TEXT,
   city      TEXT,
   street    TEXT,
-  flag      INTEGER
+  flag      TEXT
 );

@@ -2,11 +2,7 @@ package synchronizer.runbkg;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.project.MavenProject;
 
 import java.util.HashSet;
@@ -34,8 +30,9 @@ public class RunBackground extends AbstractMojo {
             System.out.println("Run " + mainClass + " in background");
             Set<String> classpath = new HashSet<>(project.getCompileClasspathElements());
             classpath.addAll(project.getRuntimeClasspathElements());
-            Runtime.getRuntime().exec("cmd /c start java -cp " +
-                    String.join(System.getProperty("path.separator"), classpath) + ' ' + mainClass);
+//            Runtime.getRuntime().exec("cmd /c start java -cp " +
+//                    String.join(System.getProperty("path.separator"), classpath) + ' ' + mainClass);
+            new ProcessBuilder("java", "-cp", String.join(System.getProperty("path.separator"), classpath), mainClass).start();
         } catch (Exception e) {
             throw new MojoExecutionException("Execution failed", e);
         }

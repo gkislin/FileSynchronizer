@@ -4,7 +4,7 @@ import synchronizer.common.LoggerWrapper;
 import synchronizer.common.Statistic;
 import synchronizer.common.util.FileUtil;
 import synchronizer.common.xml.XmlParser;
-import synchronizer.common.xml.XmlParserFactory;
+import synchronizer.common.xml.XmlUserParser;
 import synchronizer.common.xml.schema.XMLUser;
 import synchronizer.common.xml.schema.XMLUsers;
 
@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class ClientXmlHandler {
     private static final LoggerWrapper LOG = LoggerWrapper.get(ClientXmlHandler.class);
 
-    private final XmlParser parser = XmlParserFactory.getParser();
+    private final XmlParser parser = XmlUserParser.get();
 
     public void processChunkFiles(final List<Path> paths) throws IOException, JAXBException {
         checkArgument(!paths.isEmpty());

@@ -115,4 +115,12 @@ public class AddressType {
         this.street = value;
     }
 
+    @Override
+    public String toString() {
+        return "AddressType{" +
+                "country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                '}';
+    }
 }

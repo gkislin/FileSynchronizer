@@ -16,6 +16,7 @@
         <module>client</module>
         <module>server</module>
         <module>common</module>
+        <module>it-test</module>
         <module>run-background-plugin</module>
     </modules>
 

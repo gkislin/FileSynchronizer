@@ -1,8 +1,9 @@
 package synchronizer.server;
 
 import synchronizer.common.LoggerWrapper;
+import synchronizer.common.util.FileUtil;
 import synchronizer.common.xml.XmlParser;
-import synchronizer.common.xml.XmlParserFactory;
+import synchronizer.common.xml.XmlUserParser;
 import synchronizer.common.xml.schema.XMLUsers;
 import synchronizer.server.dao.UserDao;
 
@@ -23,10 +24,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ServerXmlHandler {
     private static final LoggerWrapper LOG = LoggerWrapper.get(ServerXmlHandler.class);
 
-    private final XmlParser parser = XmlParserFactory.getParser();
-    private final UserDao userDao = new UserDao();
+    private final XmlParser parser = XmlUserParser.get();
 
     public void processChunkFile(final Path chunkFile) {
+        if (!chunkFile.toString().endsWith(".xml")) {
+            return;
+        }
         LOG.info("Receive " + chunkFile);
         checkNotNull(chunkFile);
         final XMLUsers xmlUsers;
@@ -35,14 +38,19 @@ public class ServerXmlHandler {
                 xmlUsers = parser.unmarshall(reader);
             }
             // TODO rename flag file chunkFile.db_saving
-            userDao.save(xmlUsers.getXMLUser());
+            UserDao.save(xmlUsers.getXMLUser());
             // TODO rename flag file to chunkFile.done
             // delete only after saving into DB.
             Files.delete(chunkFile);
             LOG.info(chunkFile + " have been processed");
 
         } catch (IOException | JAXBException | SQLException e) {
-            throw LOG.getIllegalStateException("Exception during processing received file " + chunkFile, e);
+            LOG.error("Exception during processing received file " + chunkFile, e);
+            try {
+                FileUtil.replaceExtension(chunkFile, "bad");
+            } catch (IOException e1) {
+                throw LOG.getIllegalStateException("Cannot rename " + chunkFile + " file");
+            }
         }
     }
 }

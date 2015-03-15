@@ -26,7 +26,7 @@ public class DirectoryScanner {
         this.scannedDir = dir;
         try {
             watcher = FileSystems.getDefault().newWatchService();
-            dir.register(watcher, ENTRY_CREATE);
+            scannedDir.register(watcher, ENTRY_CREATE);
         } catch (IOException e) {
             throw LOG.getIllegalStateException("Error creating DirectoryScanner of " + dir, e);
         }
@@ -43,8 +43,17 @@ public class DirectoryScanner {
     }
 
     public void scanAndProcess(Consumer<Path> consumer) throws IOException, InterruptedException {
-        watcher.take().pollEvents().forEach(event -> {
-            consumer.accept(scannedDir.resolve(((WatchEvent<Path>) event).context()));
-        });
+        while (true) {
+            WatchKey key = watcher.take();
+            key.pollEvents().forEach(event -> consumer.accept(scannedDir.resolve(((WatchEvent<Path>) event).context())));
+            if (!key.reset()) {
+                throw LOG.getIllegalStateException("Directory " + scannedDir + " is inaccessible");
+            }
+        }
     }
+
+//    public static void main(String[] args) throws IOException, InterruptedException {
+//        DirectoryScanner directoryScanner = new DirectoryScanner(Paths.get("d:\\Temp\\"));
+//        directoryScanner.scanAndProcess(System.out::println);
+//    }
 }

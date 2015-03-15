@@ -24,9 +24,13 @@ abstract public class AbstractConfig {
     }
 
     protected Path getDirectory(String key) {
-        Path path = Paths.get(config.getString(key));
+        String dir = config.getString(key);
+        Path path = Paths.get(dir);
         if (!Files.isDirectory(path)) {
-            throw log.getIllegalStateException(key + " in config " + configName + " is not directory");
+            path = Paths.get("../" + dir);
+            if (!Files.isDirectory(path)) {
+                throw log.getIllegalStateException(path.toAbsolutePath() + " in config " + configName + " is not directory");
+            }
         }
         return path;
     }

@@ -7,9 +7,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ * <p>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -28,16 +28,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "username",
-    "firstname",
-    "lastname",
-    "birth",
-    "address"
+        "username",
+        "firstname",
+        "lastname",
+        "birth",
+        "address"
 })
 @XmlRootElement(name = "XMLUser", namespace = "https://cargoonline.ru")
 public class XMLUser {
@@ -62,11 +60,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the username property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getUsername() {
         return username;
@@ -74,11 +70,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the username property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setUsername(String value) {
         this.username = value;
@@ -86,11 +80,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the firstname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getFirstname() {
         return firstname;
@@ -98,11 +90,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the firstname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setFirstname(String value) {
         this.firstname = value;
@@ -110,11 +100,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the lastname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getLastname() {
         return lastname;
@@ -122,11 +110,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the lastname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setLastname(String value) {
         this.lastname = value;
@@ -134,11 +120,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the birth property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getBirth() {
         return birth;
@@ -146,11 +130,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the birth property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setBirth(XMLGregorianCalendar value) {
         this.birth = value;
@@ -158,11 +140,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the address property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AddressType }
-     *     
+     *
+     * @return possible object is
+     * {@link AddressType }
      */
     public AddressType getAddress() {
         return address;
@@ -170,11 +150,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the address property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AddressType }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link AddressType }
      */
     public void setAddress(AddressType value) {
         this.address = value;
@@ -182,11 +160,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the code property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCode() {
         return code;
@@ -194,11 +170,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the code property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCode(String value) {
         this.code = value;
@@ -206,11 +180,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the age property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     public Integer getAge() {
         return age;
@@ -218,11 +190,9 @@ public class XMLUser {
 
     /**
      * Sets the value of the age property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     public void setAge(Integer value) {
         this.age = value;
@@ -230,11 +200,9 @@ public class XMLUser {
 
     /**
      * Gets the value of the flag property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FlagType }
-     *     
+     *
+     * @return possible object is
+     * {@link FlagType }
      */
     public FlagType getFlag() {
         return flag;
@@ -242,14 +210,25 @@ public class XMLUser {
 
     /**
      * Sets the value of the flag property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FlagType }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link FlagType }
      */
     public void setFlag(FlagType value) {
         this.flag = value;
     }
 
+    @Override
+    public String toString() {
+        return "XMLUser{" +
+                "username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", birth=" + birth +
+                ", address=" + address +
+                ", code='" + code + '\'' +
+                ", age=" + age +
+                ", flag=" + flag +
+                '}';
+    }
 }

@@ -8,20 +8,36 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * User: gkislin
- *
+ * <p>
  * Thread-safe (by ThreadLocal) JAXB realization with validation
+ *
  * @link https://jaxb.java.net/guide/Performance_and_thread_safety.html
  */
 public class XmlParser {
     private static final LoggerWrapper LOG = LoggerWrapper.get(XmlParser.class);
+
+    private static final DatatypeFactory DATATYPE_FACTORY;
+
+    static {
+        try {
+            DATATYPE_FACTORY = DatatypeFactory.newInstance();
+        } catch (DatatypeConfigurationException e) {
+            throw LOG.getIllegalStateException("Error DatatypeFactory initialization", e);
+        }
+    }
 
     // Validation
     private static final SchemaFactory SCHEMA_FACTORY = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -77,5 +93,15 @@ public class XmlParser {
 
     public void marshall(Object instance, Writer writer) throws JAXBException {
         marshallerThreadLocal.get().marshal(instance, writer);
+    }
+
+    public static XMLGregorianCalendar toXmlCalendar(GregorianCalendar cal) {
+        return DATATYPE_FACTORY.newXMLGregorianCalendar(cal);
+    }
+
+    public static XMLGregorianCalendar toXmlCalendar(Date date) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        return toXmlCalendar(cal);
     }
 }

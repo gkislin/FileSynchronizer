@@ -5,7 +5,6 @@ import synchronizer.common.util.DirectoryScanner;
 import synchronizer.common.util.ScheduledExecutor;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * GKislin
@@ -24,12 +23,10 @@ public class MainServerSynchronizer {
         scanner.process(xmlHandler::processChunkFile);
 
         // scan for new receiving files
-        executor.scheduleWithFixedDelay(() -> {
-            try {
-                scanner.process(xmlHandler::processChunkFile);
-            } catch (IOException | InterruptedException e) {
-                throw LOG.getIllegalStateException("Error " + ServerConfig.get().getReceivingDirectory() + " processing", e);
-            }
-        }, 0, 1, TimeUnit.SECONDS);
+        try {
+            scanner.scanAndProcess(xmlHandler::processChunkFile);
+        } catch (IOException | InterruptedException e) {
+            throw LOG.getIllegalStateException("Error " + ServerConfig.get().getReceivingDirectory() + " processing", e);
+        }
     }
 }
